@@ -8,14 +8,27 @@ findMaximum x (y:list)
     | x > y = findMaximum x list
     | otherwise = findMaximum y list
 
-
 myMaximum :: [Int] -> Int
 myMaximum (x:list) = findMaximum x list
 
-average :: [Int] -> Float 
-average list = (sum list) div (myLength list)
+
+average :: [Int] -> Float
+average list = s / m
+    where
+        s = fromIntegral (sum list) :: Float
+        m = fromIntegral (myLength list) :: Float
 
 
 
--- MAIN DE PROVA
-main = putStrLn (show (myMaximum [4,3,1,5,4,5,2]))
+buildPalindrome :: [Int] -> [Int]
+buildPalindrome list = reverse list ++ list
+
+remove :: [Int] -> [Int] -> [Int] 
+remove [] _ = []
+remove (x:xs) y
+    | elem x y = remove xs y
+    | otherwise = x : (remove xs y)
+
+flatten :: [[Int]] -> [Int] 
+flatten [] = []
+flatten _ =  
