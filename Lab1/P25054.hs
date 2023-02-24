@@ -60,15 +60,17 @@ oddsNevens list = (odds list, evens list)
 --   }
 -- }
 
-primes :: Int -> Int -> [Int]
-primes 1 _ = []
-primes x y
-    | x `mod` y == 0 && elem(y (primes ((x `div` y) (y)))) = primes ((x `div` y) (y))
-    | x `mod` y == 0 = (y:primes (x `div` y) (y))
-    | y == floor (sqrt (fromIntegral x)) = x:[]
-    | otherwise = primes x (y+1)
+checkPrime :: Int -> Int -> Bool
+checkPrime x 1 = True
+checkPrime x y
+    | x `mod` y == 0 = False
+    | otherwise = checkPrime x (y-1)
 
+isPrime :: Int -> Bool
+isPrime x
+    | x == 0 = False
+    | x == 1 = False
+    | otherwise = checkPrime x (floor (sqrt (fromIntegral x)))
 
 primeDivisors :: Int -> [Int]
-primeDivisors 1 = []
-primeDivisors n = primes n 2
+primeDivisors n = [divisor | divisor <-[2 .. n], mod n divisor == 0, isPrime divisor]
